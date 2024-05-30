@@ -173,7 +173,7 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      npm start
      ```
 
-   ![Captura](./images/server-is-running.png)
+     ![Captura](./images/server-is-running.png)
 
 9. **Estructura de Carpetas**
 
@@ -184,7 +184,9 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      │   │   └── server.ts
      │   ├── .env.development
      │   ├── .env.temp
-     │   ├── tsconfig.json
-     │   └── .gitignore
+     │   ├── .gitignore
+     │   ├── package-lock.json
+     │   ├── package.json
+     │   └── tsconfig.json
 
    ```
