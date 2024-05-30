@@ -173,15 +173,18 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      npm start
      ```
 
-   ![Captura](./images/install-fnm-windows.png)
+   ![Captura](./images/server-is-running.png)
 
 9. **Estructura de Carpetas**
 
-   server/
-   ├── src/
-   │ ├── app.ts
-   │ └── server.ts
-   ├── .env.development
-   ├── .env.temp
-   ├── tsconfig.json
-   └── .gitignore
+   ```bash
+     ├── server
+     │   ├── src
+     │   │   ├── app.ts
+     │   │   └── server.ts
+     │   ├── .env.development
+     │   ├── .env.temp
+     │   ├── tsconfig.json
+     │   └── .gitignore
+
+   ```
