@@ -68,7 +68,7 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
    - Instalar TypeScript y otras dependencias de desarrollo:
      ```bash
-     npm install typescript ts-node @types/node @types/express dotenv-cli nodemon --save-dev
+     npm install typescript ts-node @types/node @types/express nodemon --save-dev
      ```
    - Instalar las dependencias necesarias:
      ```bash
@@ -84,7 +84,6 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
    - Editar `tsconfig.json` para incluir las configuraciones básicas, ambas comentadas lo que hay que hacer es des-comentarlas y cambiarles el valor por los siguientes:
 
      ```json
-     // tsconfig.json
      {
        "outDir": "./dist",
        "typeRoots": ["./node_modules/@types"]
@@ -93,26 +92,10 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
 5. **Archivos de Configuración Adicionales**
 
-   - Crear un archivo `.env.development` para almacenar las variables de entorno:
-
-     ```
-     PORT=3000
-     SERVER_URL=http://localhost:${PORT}
-     ```
-
-   - Crear un archivo `.env.temp` para los placeholders de las variables de entorno:
-
-     ```
-     PORT=3000
-     SERVER_URL=http://localhost:${PORT}
-     ```
-
    - Crear un archivo `.gitignore` para excluir ciertos archivos y carpetas del repositorio:
      ```
      node_modules
      dist
-     .env
-     .env.development
      ```
 
 6. **Scripts de NPM y cambio del main file en package.json**
@@ -121,9 +104,9 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
      ```json
      "scripts": {
-        "build": "dotenv -e .env.development -- npx tsc",
+        "build": "npx tsc",
         "start:js": "node dist/server.js",
-        "start": "dotenv -e .env.development -- nodemon src/server.ts",
+        "start": "nodemon src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
      }
      ```
@@ -140,8 +123,9 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
      ```typescript
      import app from "./app";
+
      // Puerto
-     const PORT = process.env.PORT || 3000;
+     const PORT = 3000;
 
      // Inicio del servidor
      app.listen(PORT, () => {
@@ -176,8 +160,6 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      │   ├── src
      │   │   ├── app.ts
      │   │   └── server.ts
-     │   ├── .env.development
-     │   ├── .env.temp
      │   ├── .gitignore
      │   ├── package-lock.json
      │   ├── package.json
