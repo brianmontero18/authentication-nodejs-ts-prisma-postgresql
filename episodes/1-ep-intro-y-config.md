@@ -62,16 +62,17 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      ```bash
      npm init -y
      ```
+     Esto crea un `package.json` con una configuración inicial para tu app.
 
 3. **Instalación de TypeScript y otras dependencias**
 
    - Instalar TypeScript y otras dependencias de desarrollo:
      ```bash
-     npm install typescript ts-node @types/node @types/express cross-env nodemon --save-dev
+     npm install typescript ts-node @types/node @types/express dotenv-cli nodemon --save-dev
      ```
    - Instalar las dependencias necesarias:
      ```bash
-     npm install dotenv express
+     npm install express
      ```
    - Crear el archivo de configuración de TypeScript:
      ```bash
@@ -96,14 +97,14 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
      ```
      PORT=3000
-     SERVER_URL=http://localhost:3000
+     SERVER_URL=http://localhost:${PORT}
      ```
 
    - Crear un archivo `.env.temp` para los placeholders de las variables de entorno:
 
      ```
      PORT=3000
-     SERVER_URL=http://localhost:3000
+     SERVER_URL=http://localhost:${PORT}
      ```
 
    - Crear un archivo `.gitignore` para excluir ciertos archivos y carpetas del repositorio:
@@ -112,7 +113,6 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
      dist
      .env
      .env.development
-     .env.production
      ```
 
 6. **Scripts de NPM y cambio del main file en package.json**
@@ -121,10 +121,10 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
      ```json
      "scripts": {
-       "build": "cross-env NODE_ENV=production npx tsc",
-       "start:js": "node dist/server.js",
-       "start": "cross-env NODE_ENV=development nodemon src/server.ts",
-       "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "dotenv -e .env.development -- npx tsc",
+        "start:js": "node dist/server.js",
+        "start": "dotenv -e .env.development -- nodemon src/server.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
      }
      ```
 
@@ -153,14 +153,8 @@ En este episodio, configuraremos el entorno de desarrollo para nuestro proyecto 
 
      ```typescript
      import express from "express";
-     import dotenv from "dotenv";
-     import path from "path";
 
      const app = express();
-
-     // Middlewares
-     // Configuración de variables de entorno
-     dotenv.config({ path: path.resolve(__dirname, "..", `.env.${process.env.NODE_ENV}`) });
 
      export default app;
      ```
