@@ -24,10 +24,10 @@ model User {
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  userId       Int
-  user         User      @relation(fields: [userId], references: [id])
-  token        String    @unique
-  expiresAt    DateTime
-  createdAt    DateTime  @default(now())
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

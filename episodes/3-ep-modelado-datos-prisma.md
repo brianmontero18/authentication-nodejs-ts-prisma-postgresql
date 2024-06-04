@@ -26,6 +26,8 @@ Nuestro sistema de autenticación incluirá los siguientes conceptos y relacione
 
 ## Definición de los Modelos en Prisma
 
+Nota: Estaria bueno que tengas instalada la extension Prisma en tu VSCode para una mejor experiencia de desarrollo del `prisma.schema`
+
 ### 1. Editar el Prisma Schema
 
 Vamos a editar el modelo `User` y crear el modelo `Session` en el archivo `schema.prisma`.
@@ -42,12 +44,12 @@ model User {
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  userId       Int
-  user         User      @relation(fields: [userId], references: [id])
-  token        String    @unique
-  expiresAt    DateTime
-  createdAt    DateTime  @default(now())
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 ```
 
@@ -63,25 +65,25 @@ Si todo funciona correctamente, deberías recibir el siguiente mensaje en tu ter
 
 ![capura1](./images/second-migration.png)
 
-3. **Estructura de Carpetas actualizada**
+### 3. Estructura de Carpetas actualizada
 
-   ```bash
-   server/
-   ├── prisma/
-   │   ├── migrations/
-   │   │   │── 20240602173127_init/
-   │   │   │     │    └── migration.sql
-   │   │   │── 20240603134230_add_user_and_session_models/
-   │   │   │     │    └── migration.sql
-   │   │   └── migration_lock.toml
-   │   └── schema.prisma
-   ├── src/
-   │   ├── config/
-   │   │   └── prismaClient.ts
-   │   ├── app.ts
-   │   └── server.ts
-   ├── .env
-   ├── .env.temp
-   ├── tsconfig.json
-   └── .gitignore
-   ```
+```bash
+server/
+├── prisma/
+│   ├── migrations/
+│   │   │── 20240602173127_init/
+│   │   │     │    └── migration.sql
+│   │   │── 20240603134230_add_user_and_session_models/
+│   │   │     │    └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema.prisma
+├── src/
+│   ├── config/
+│   │   └── prismaClient.ts
+│   ├── app.ts
+│   └── server.ts
+├── .env
+├── .env.temp
+├── tsconfig.json
+└── .gitignore
+```
