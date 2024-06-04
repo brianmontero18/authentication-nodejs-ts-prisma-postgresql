@@ -188,45 +188,50 @@ export default app;
 Instala Postman como extension en tu VSCode
 
 - Prueba de POST `/auth/signup`
+
   ![captura1](./images/creacion-usuario-endpoint.png)
 
 - Prueba de GET `/auth/user/:userId`
+
   ![captura2](./images/get-user-endpoint.png)
 
 - Prueba de POST `/auth/signin`
+
   ![captura3](./images/sigin-user-endpoint.png)
 
-  Chequea luego en Prisma Studio que el usuario tiene una sesion asociada
+- Chequea luego en Prisma Studio que el usuario tiene una sesion asociada
+
   ![captura4](./images/prisma-user-session-endpoint.png)
 
 - Estructura de carpetas en Postman:
+
   ![captura5](./images/postman-folder-structure.png)
 
-6. **Estructura de Carpetas actualizada**
+### 7. Estructura de Carpetas actualizada
 
-   ```bash
-   server/
-   ├── prisma/
-   │   ├── migrations/
-   │   │   │── 20240602173127_init/
-   │   │   │     │    └── migration.sql
-   │   │   │── 20240603134230_add_user_and_session_models/
-   │   │   │     │    └── migration.sql
-   │   │   └── migration_lock.toml
-   │   └── schema.prisma
-   ├── src/
-   │   ├── config/
-   │   │   └── prismaClient.ts
-   │   ├── controllers/
-   │   │   └── authController.ts
-   │   ├── routes/
-   │   │   └── authRoute.ts
-   │   ├── services/
-   │   │   ├── authService.ts
-   │   ├── app.ts
-   │   └── server.ts
-   ├── .env
-   ├── .env.temp
-   ├── tsconfig.json
-   └── .gitignore
-   ```
+```bash
+server/
+├── prisma/
+│   ├── migrations/
+│   │   │── 20240602173127_init/
+│   │   │     │    └── migration.sql
+│   │   │── 20240603134230_add_user_and_session_models/
+│   │   │     │    └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema.prisma
+├── src/
+│   ├── config/
+│   │   └── prismaClient.ts
+│   ├── controllers/
+│   │   └── authController.ts
+│   ├── routes/
+│   │   └── authRoute.ts
+│   ├── services/
+│   │   ├── authService.ts
+│   ├── app.ts
+│   └── server.ts
+├── .env
+├── .env.temp
+├── tsconfig.json
+└── .gitignore
+```
