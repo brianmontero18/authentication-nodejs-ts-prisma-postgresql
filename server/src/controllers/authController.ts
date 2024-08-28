@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { createUser, findUserByEmail, createSession, getUserById } from "../services/authService";
 import bcrypt from "bcryptjs";
+import { createUser, findUserByEmail, getUserById } from "../services/authService";
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/jwt";
+import { setAuthCookies } from "../utils/cookies";
 
 export const postSignup = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -13,7 +15,12 @@ export const postSignup = async (req: Request, res: Response) => {
 
   try {
     const user = await createUser(email, password, name);
-    res.status(201).json({ message: "User created", userId: user.id });
+
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = await generateRefreshToken(user.id);
+
+    setAuthCookies(res, accessToken, refreshToken);
+    res.status(201).json({ message: "User created", user });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -38,9 +45,11 @@ export const postSignin = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const session = await createSession(user.id);
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = await generateRefreshToken(user.id);
 
-    res.status(200).json({ message: "Logged in", sessionId: session.id });
+    setAuthCookies(res, accessToken, refreshToken);
+    res.status(200).json({ message: "Logged in" });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -64,5 +73,23 @@ export const getUser = async (req: Request, res: Response) => {
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const refreshToken = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "Refresh token is required" });
+  }
+
+  try {
+    const userId = await verifyRefreshToken(refreshToken);
+    const accessToken = generateAccessToken(userId);
+
+    setAuthCookies(res, accessToken, refreshToken);
+    res.json({ accessToken });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid refresh token" });
   }
 };
